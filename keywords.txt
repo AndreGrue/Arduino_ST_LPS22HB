@@ -1,0 +1,37 @@
+#######################################
+# IDE Map for Arduino ST LPS22HB pressure sensor
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+st_lps22hb    KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+initialize  KEYWORD2
+terminate  KEYWORD2
+setRate   KEYWORD2
+reset   KEYWORD2
+connected  KEYWORD2
+setIrqPin KEYWORD2
+enableInterrupt    KEYWORD2
+disableInterrupt   KEYWORD2
+interruptCallback KEYWORD2
+dataAvailable   KEYWORD2
+temperature   KEYWORD2
+pressure    KEYWORD2
+read    KEYWORD2
+write    KEYWORD2
+whoAmI    KEYWORD2
+triggerOneShot    KEYWORD2
+twosCompToInteger    KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
