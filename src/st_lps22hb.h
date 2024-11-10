@@ -41,6 +41,7 @@ public:
    */
   struct Data {
     float    value;
+    float    variance;
     uint64_t timestamp;
     uint8_t  flags;
   };
@@ -51,7 +52,9 @@ public:
    * @brief constructor
    * @param wire I2C bus
    */
-  st_lps22hb(TwoWire& wire);
+  st_lps22hb(TwoWire&    wire,
+             const float pressure_variance    = 0.0025f,
+             const float temperature_variance = 0.5625f);
   virtual ~st_lps22hb() = default;
 
   // operations
@@ -63,8 +66,9 @@ public:
    * @param cb interrupt callback
    */
   bool initialize(const Rate    rate   = Rate::RATE_ONE_SHOT,
-                  const PinName irqPin = NC,
+                  const PinName irqPin = NC
 #ifdef __MBED__
+                  ,
                   mbed::Callback<void(void)> cb = nullptr
 #endif
   );
@@ -151,6 +155,18 @@ private:
   mbed::Callback<void(void)> cb_;
 #endif
   volatile uint64_t timestamp_ns_ {0};
+  /**
+   * @brief variance of the pressure sensor
+   * assuming half of the absolute accuraccy 0.1hPa as a conservative estimate
+   * for the standard deviation resulting in a variance of 0.0025hPa^2
+   */
+  const float pressure_variance_ {0.0025f};
+  /**
+   * @brief variance of the temperature sensor
+   * assuming half of the absolute accuraccy 0.75°C as a conservative estimate
+   * for the standard deviation resulting in a variance of 0.5625°C^2
+   */
+  const float temperature_variance_ {0.5625f};
 };
 
 /*****************************************************************************/

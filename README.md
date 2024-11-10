@@ -8,7 +8,7 @@ A main goal of the library is to provide a simple and also efficent way of readi
 
 ## Data sheets
 - [Website overview](https://www.st.com/en/mems-and-sensors/lps22hb.html#overview)
-- [Specification](https://www.st.com/resourgxce/en/datasheet/lps22hb.pdf)
+- [Specification](https://www.st.com/resource/en/datasheet/lps22hb.pdf)
 - [Application note](https://www.st.com/resource/en/application_note/an4833-measuring-pressure-data-from-sts-lps22hb-digital-pressure-sensor-stmicroelectronics.pdf)
 - [Tech note](https://www.st.com/resource/en/technical_note/tn1229-how-to-interpret-pressure-and-temperature-readings-in-the-lps22hb-pressure-sensor-stmicroelectronics.pdf)
 

@@ -7,6 +7,8 @@
 #######################################
 
 st_lps22hb    KEYWORD1
+Rate    KEYWORD1
+Data    KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)

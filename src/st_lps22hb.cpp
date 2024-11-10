@@ -49,20 +49,23 @@ namespace andrgrue::sensor {
 
 /*****************************************************************************/
 
-st_lps22hb::st_lps22hb(TwoWire& wire)
+st_lps22hb::st_lps22hb(TwoWire&    wire,
+                       const float pressure_variance,
+                       const float temperature_variance)
     : wire_(wire)
-    , address_(LPS22HB_DEVICE_ADDRESS) {}
+    , address_(LPS22HB_DEVICE_ADDRESS)
+    , pressure_variance_(pressure_variance)
+    , temperature_variance_(temperature_variance) {};
 
 bool st_lps22hb::initialize(const Rate    rate,
-                            const PinName irqPin,
+                            const PinName irqPin
 #ifdef __MBED__
+                            ,
                             mbed::Callback<void(void)> cb
 #endif
 ) {
   rate_   = rate;
   irqPin_ = irqPin;
-
-  // wire_.begin();
 
   //  Check that chip boot up is complete
   while ((read(LPS22HB_CTRL_REG2) & 0x07) != 0) {
@@ -187,6 +190,7 @@ float st_lps22hb::pressure() {
 
 void st_lps22hb::pressure(Data& data) {
   data.value     = pressure();
+  data.variance  = pressure_variance_;
   data.timestamp = timestamp_ns_;
   data.flags     = 0;
 }
@@ -222,6 +226,7 @@ float st_lps22hb::temperature() {
 
 void st_lps22hb::temperature(Data& data) {
   data.value     = temperature();
+  data.variance  = temperature_variance_;
   data.timestamp = timestamp_ns_;
   data.flags     = 0;
 }
