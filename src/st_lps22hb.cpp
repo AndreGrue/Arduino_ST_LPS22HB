@@ -67,25 +67,29 @@ bool st_lps22hb::initialize(const Rate    rate,
   rate_   = rate;
   irqPin_ = irqPin;
 
-  //  Check that chip boot up is complete
-  while ((read(LPS22HB_CTRL_REG2) & 0x07) != 0) {
-    yield();
-  }
-
-  //  power-down mode, LPF off, and BDU on
-  write(LPS22HB_CTRL_REG1, 0x02);
-
-  // check connection
-  if (connected()) {
-    enableInterrupt();
 #ifdef __MBED__
-    interruptCallback(cb);
+  if (interruptCallback(cb))
 #endif
-    if (Rate::RATE_ONE_SHOT != rate_) {
-      setRate(rate_);
-    }
+  {
 
-    return true;
+    //  Check that chip boot up is complete
+    while ((read(LPS22HB_CTRL_REG2) & 0x87) != 0) {
+      yield();
+    }
+    reset();
+
+    //  power-down mode, LPF off, and BDU on
+    write(LPS22HB_CTRL_REG1, 0x02);
+
+    // check connection
+    if (connected()) {
+      enableInterrupt();
+      if (Rate::RATE_ONE_SHOT != rate_) {
+        setRate(rate_);
+      }
+
+      return true;
+    }
   }
 
   return false;
@@ -135,14 +139,20 @@ void st_lps22hb::disableInterrupt() {
 
 #ifdef __MBED__
 
-void st_lps22hb::interruptCallback(mbed::Callback<void(void)> cb) {
+bool st_lps22hb::interruptCallback(mbed::Callback<void(void)> cb) {
   if (NC != irqPin_ && nullptr != cb) {
     static mbed::InterruptIn irq(irqPin_, PullDown);
     static rtos::Thread      event_t(osPriorityHigh, 768, nullptr, "events");
     cb_ = cb;
-    event_t.start(callback(&queue, &events::EventQueue::dispatch_forever));
-    irq.rise(mbed::callback(this, &st_lps22hb::interruptHandler));
+    osStatus ret =
+        event_t.start(callback(&queue, &events::EventQueue::dispatch_forever));
+    if (osOK == ret) {
+      irq.rise(mbed::callback(this, &st_lps22hb::interruptHandler));
+      return true;
+    }
+    return false;
   }
+  return true;
 }
 
 void st_lps22hb::interruptHandler() {

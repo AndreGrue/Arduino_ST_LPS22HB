@@ -108,8 +108,9 @@ public:
   /**
    * @brief link interrupt callback
    * @param cb interrupt callback
+   * @return true if successful
    */
-  void interruptCallback(mbed::Callback<void()> cb);
+  bool interruptCallback(mbed::Callback<void()> cb);
 #endif
 
   /**
