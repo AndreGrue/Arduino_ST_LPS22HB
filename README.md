@@ -97,3 +97,10 @@ Special thanks to the authors.
  - [Reefwing-LPS22HB](https://github.com/Reefwing-Software/Reefwing-LPS22HB)
  - [Arduino_BMI270_BMM150](https://github.com/arduino-libraries/Arduino_BMI270_BMM150)
 
+## License
+
+Copyright © 2024, André Grüttner. All rights reserved.
+
+This project is licensed under the GNU Lesser General Public License v2.1 (LGPL-2.1).
+You may use, modify, and distribute this software under the terms of the LGPL-2.1 license.
+See the [LICENSE](./LICENSE.txt) file for details, or visit [GNU’s official LGPL-2.1 page](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html) for the full license text.

@@ -3,7 +3,7 @@
  * @file       st_lps22hb.h
  * @brief      st lps22hb library for arduino
  * @author     André Grüttner
- * @copyright  Please see the accompanying LICENSE file.
+ * @copyright  Please see the accompanying LICENSE.txt file.
  * @date       2024-11-03
  */
 /*****************************************************************************/
