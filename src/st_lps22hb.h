@@ -49,11 +49,12 @@ public:
   // construction
 public:
   /**
-   * @brief constructor
    * @param wire I2C bus
+   * @param pressure_variance variance of the pressure sensor in [Pa^2]
+   * @param temperature_variance variance of the temperature sensor in [°C^2]
    */
   st_lps22hb(TwoWire&    wire,
-             const float pressure_variance    = 0.0025f,
+             const float pressure_variance    = 25.0f,
              const float temperature_variance = 0.5625f);
   virtual ~st_lps22hb() = default;
 
@@ -159,9 +160,9 @@ private:
   /**
    * @brief variance of the pressure sensor
    * assuming half of the absolute accuraccy 0.1hPa as a conservative estimate
-   * for the standard deviation resulting in a variance of 0.0025hPa^2
+   * for the standard deviation resulting in a variance of 25.0Pa^2
    */
-  const float pressure_variance_ {0.0025f};
+  const float pressure_variance_ {25.0f};
   /**
    * @brief variance of the temperature sensor
    * assuming half of the absolute accuraccy 0.75°C as a conservative estimate

@@ -194,7 +194,7 @@ float st_lps22hb::pressure() {
   uint8_t  pressOutH  = read(LPS22HB_PRES_OUT_H);
   uint32_t val    = (((uint32_t)pressOutH << 16) | ((uint32_t)pressOutL << 8)
                   | (uint32_t)pressOutXL);
-  float    result = (double)val / 409600.0f;
+  float    result = (double)val / 40.96f;
   return result;
 }
 
