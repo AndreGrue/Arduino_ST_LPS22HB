@@ -36,6 +36,13 @@ public:
     RATE_75HZ,
   };
 
+  /// low pass filter
+  enum class LowPassFilter : uint8_t {
+    LPF_2 = 0,
+    LPF_9,
+    LPF_20,
+  };
+
   /**
    * @brief sensor data
    */
@@ -66,8 +73,9 @@ public:
    * @param irqPin interrupt pin name
    * @param cb interrupt callback
    */
-  bool initialize(const Rate    rate   = Rate::RATE_ONE_SHOT,
-                  const PinName irqPin = NC
+  bool initialize(const Rate          rate   = Rate::RATE_ONE_SHOT,
+                  const LowPassFilter lpf    = LowPassFilter::LPF_2,
+                  const PinName       irqPin = NC
 #ifdef __MBED__
                   ,
                   mbed::Callback<void(void)> cb = nullptr
@@ -152,6 +160,7 @@ private:
   TwoWire&      wire_;
   const uint8_t address_;
   Rate          rate_ {Rate::RATE_ONE_SHOT};
+  LowPassFilter lpf_ {LowPassFilter::LPF_2};
   PinName       irqPin_ {NC};
 #ifdef __MBED__
   mbed::Callback<void(void)> cb_;

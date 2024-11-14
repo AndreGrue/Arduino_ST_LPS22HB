@@ -57,14 +57,16 @@ st_lps22hb::st_lps22hb(TwoWire&    wire,
     , pressure_variance_(pressure_variance)
     , temperature_variance_(temperature_variance) {};
 
-bool st_lps22hb::initialize(const Rate    rate,
-                            const PinName irqPin
+bool st_lps22hb::initialize(const Rate          rate,
+                            const LowPassFilter lpf,
+                            const PinName       irqPin
 #ifdef __MBED__
                             ,
                             mbed::Callback<void(void)> cb
 #endif
 ) {
   rate_   = rate;
+  lpf_    = lpf;
   irqPin_ = irqPin;
 
 #ifdef __MBED__
@@ -116,8 +118,19 @@ void st_lps22hb::reset() {
 
 void st_lps22hb::setRate(const Rate rate) {
   rate_ = rate;
+  // low pass filter
+  uint8_t lpf = 0;
+  if (LowPassFilter::LPF_2 == lpf_) {
+    lpf = 0;
+  } else if (LowPassFilter::LPF_9 == lpf_) {
+    lpf = 0x08;
+  } else if (LowPassFilter::LPF_20 == lpf_) {
+    lpf = 0x0C;
+  }
+
   //  Set ODR bits 4, 5 & 6 (_rate & 0x07) << 4 and BDU 0x02
-  write(LPS22HB_CTRL_REG1, ((static_cast<uint8_t>(rate_) & 0x07) << 4) | 0x02);
+  write(LPS22HB_CTRL_REG1,
+        ((static_cast<uint8_t>(rate_) & 0x07) << 4) | lpf | 0x02);
 }
 
 void st_lps22hb::enableInterrupt() {
