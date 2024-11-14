@@ -8,6 +8,7 @@
 
 st_lps22hb    KEYWORD1
 Rate    KEYWORD1
+LowPassFilter KEYWORD1
 Data    KEYWORD1
 
 #######################################

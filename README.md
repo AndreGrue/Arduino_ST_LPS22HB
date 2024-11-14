@@ -50,10 +50,10 @@ void setup() {
   if (Pressure.initialize(andrgrue::sensor::st_lps22hb::Rate::RATE_50HZ)) {
   // Option 3. Continuous mode - polling of interrupt pin to trigger sensor measurements
   // need to specify interrupt pin
-  if (Pressure.initialize(andrgrue::sensor::st_lps22hb::Rate::RATE_50HZ, p12)) {
+  if (Pressure.initialize(andrgrue::sensor::st_lps22hb::Rate::RATE_50HZ, andrgrue::sensor::st_lps22hb::LowPassFilter::LPF_9, p12)) {
   // Option 4. Continuous mode - use interrupt handler to trigger sensor measurements
   // need to specify interrupt pin and interrupt handler
-  if (Pressure.initialize(andrgrue::sensor::st_lps22hb::Rate::RATE_50HZ, p12, pressure_interrupt_handler)) {
+  if (Pressure.initialize(andrgrue::sensor::st_lps22hb::Rate::RATE_50HZ, andrgrue::sensor::st_lps22hb::LowPassFilter::LPF_20, p12, pressure_interrupt_handler)) {
     Serial.println("LPS22HB Pressure Sensor found.");
   }
   else {
