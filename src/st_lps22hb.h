@@ -20,6 +20,15 @@ namespace andrgrue::sensor {
 
 /*****************************************************************************/
 
+// I2C Device Addresses
+
+/// I2C Device Address of barometer - Nano 33 BLE SENSE
+#define LPS22HB_DEVICE_ADDRESS_NANO33BLE 0x5C
+/// I2C Device Address of barometer - Default
+#define LPS22HB_DEVICE_ADDRESS_DEFAULT 0x5D
+
+/*****************************************************************************/
+
 /**
  * @brief st lps22hb pressure sensor driver for Arduino Nano uController
  */
@@ -56,13 +65,16 @@ public:
   // construction
 public:
   /**
+   * @brief constructor
    * @param wire I2C bus
+   * @param address I2C device address of sensor
    * @param pressure_variance variance of the pressure sensor in [Pa^2]
    * @param temperature_variance variance of the temperature sensor in [°C^2]
    */
-  st_lps22hb(TwoWire&    wire,
-             const float pressure_variance    = 25.0f,
-             const float temperature_variance = 0.5625f);
+  st_lps22hb(TwoWire&      wire,
+             const uint8_t address           = LPS22HB_DEVICE_ADDRESS_NANO33BLE,
+             const float   pressure_variance = 25.0f,
+             const float   temperature_variance = 0.5625f);
   virtual ~st_lps22hb() = default;
 
   // operations
@@ -167,13 +179,13 @@ private:
 #endif
   volatile uint64_t timestamp_ns_ {0};
   /**
-   * @brief variance of the pressure sensor
+   * @brief variance of the pressure sensor [Pa^2]
    * assuming half of the absolute accuraccy 0.1hPa as a conservative estimate
    * for the standard deviation resulting in a variance of 25.0Pa^2
    */
   const float pressure_variance_ {25.0f};
   /**
-   * @brief variance of the temperature sensor
+   * @brief variance of the temperature sensor [°C^2]
    * assuming half of the absolute accuraccy 0.75°C as a conservative estimate
    * for the standard deviation resulting in a variance of 0.5625°C^2
    */
