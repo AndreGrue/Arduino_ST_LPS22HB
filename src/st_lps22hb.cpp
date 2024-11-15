@@ -46,6 +46,7 @@ namespace andrgrue::sensor {
 
 st_lps22hb::st_lps22hb(TwoWire&      wire,
                        const uint8_t address,
+                       const uint8_t irqPin,
                        const float   pressure_variance,
                        const float   temperature_variance)
     : wire_(wire)
@@ -54,16 +55,14 @@ st_lps22hb::st_lps22hb(TwoWire&      wire,
     , temperature_variance_(temperature_variance) {};
 
 bool st_lps22hb::initialize(const Rate          rate,
-                            const LowPassFilter lpf,
-                            const PinName       irqPin
+                            const LowPassFilter lpf
 #ifdef __MBED__
                             ,
                             mbed::Callback<void(void)> cb
 #endif
 ) {
-  rate_   = rate;
-  lpf_    = lpf;
-  irqPin_ = irqPin;
+  rate_ = rate;
+  lpf_  = lpf;
 
 #ifdef __MBED__
   if (interruptCallback(cb))

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add I2C device address option to constructor
 ### Fixed
 ### Changed
+- configure interrupt pin moved to constructor
 ### Removed
 ### Deprecated
 

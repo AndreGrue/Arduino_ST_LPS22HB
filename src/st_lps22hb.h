@@ -20,12 +20,10 @@ namespace andrgrue::sensor {
 
 /*****************************************************************************/
 
-// I2C Device Addresses
-
 /// I2C Device Address of barometer - Nano 33 BLE SENSE
-#define LPS22HB_DEVICE_ADDRESS_NANO33BLE 0x5C
+constexpr uint8_t LPS22HB_DEVICE_ADDRESS_NANO33BLE = 0x5C;
 /// I2C Device Address of barometer - Default
-#define LPS22HB_DEVICE_ADDRESS_DEFAULT 0x5D
+constexpr uint8_t LPS22HB_DEVICE_ADDRESS_DEFAULT = 0x5D;
 
 /*****************************************************************************/
 
@@ -68,11 +66,13 @@ public:
    * @brief constructor
    * @param wire I2C bus
    * @param address I2C device address of sensor
+   * @param irqPin interrupt pin name
    * @param pressure_variance variance of the pressure sensor in [Pa^2]
    * @param temperature_variance variance of the temperature sensor in [°C^2]
    */
   st_lps22hb(TwoWire&      wire,
              const uint8_t address           = LPS22HB_DEVICE_ADDRESS_NANO33BLE,
+             const uint8_t irqPin            = NC,
              const float   pressure_variance = 25.0f,
              const float   temperature_variance = 0.5625f);
   virtual ~st_lps22hb() = default;
@@ -82,12 +82,11 @@ public:
   /**
    * @brief initialize sensor
    * @param rate data rate
-   * @param irqPin interrupt pin name
+   * @param lpf low pass filter
    * @param cb interrupt callback
    */
-  bool initialize(const Rate          rate   = Rate::RATE_ONE_SHOT,
-                  const LowPassFilter lpf    = LowPassFilter::LPF_2,
-                  const PinName       irqPin = NC
+  bool initialize(const Rate          rate = Rate::RATE_ONE_SHOT,
+                  const LowPassFilter lpf  = LowPassFilter::LPF_2
 #ifdef __MBED__
                   ,
                   mbed::Callback<void(void)> cb = nullptr
@@ -171,9 +170,9 @@ protected:
 private:
   TwoWire&      wire_;
   const uint8_t address_;
+  PinName       irqPin_ {NC};
   Rate          rate_ {Rate::RATE_ONE_SHOT};
   LowPassFilter lpf_ {LowPassFilter::LPF_2};
-  PinName       irqPin_ {NC};
 #ifdef __MBED__
   mbed::Callback<void(void)> cb_;
 #endif
