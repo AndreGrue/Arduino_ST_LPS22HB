@@ -70,11 +70,11 @@ public:
    * @param pressure_variance variance of the pressure sensor in [Pa^2]
    * @param temperature_variance variance of the temperature sensor in [°C^2]
    */
-  st_lps22hb(TwoWire&      wire,
-             const uint8_t address           = LPS22HB_DEVICE_ADDRESS_NANO33BLE,
-             const uint8_t irqPin            = NC,
-             const float   pressure_variance = 25.0f,
-             const float   temperature_variance = 0.5625f);
+  st_lps22hb(TwoWire&       wire,
+             const uint8_t& address = LPS22HB_DEVICE_ADDRESS_NANO33BLE,
+             const PinName& irqPin  = NC,
+             const float&   pressure_variance    = 25.0f,
+             const float&   temperature_variance = 0.5625f);
   virtual ~st_lps22hb() = default;
 
   // operations

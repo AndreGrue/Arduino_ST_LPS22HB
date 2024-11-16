@@ -44,13 +44,14 @@ namespace andrgrue::sensor {
 
 /*****************************************************************************/
 
-st_lps22hb::st_lps22hb(TwoWire&      wire,
-                       const uint8_t address,
-                       const uint8_t irqPin,
-                       const float   pressure_variance,
-                       const float   temperature_variance)
+st_lps22hb::st_lps22hb(TwoWire&       wire,
+                       const uint8_t& address,
+                       const PinName& irqPin,
+                       const float&   pressure_variance,
+                       const float&   temperature_variance)
     : wire_(wire)
     , address_(address)
+    , irqPin_(irqPin)
     , pressure_variance_(pressure_variance)
     , temperature_variance_(temperature_variance) {};
 
