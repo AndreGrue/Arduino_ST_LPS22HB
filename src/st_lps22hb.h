@@ -111,7 +111,7 @@ public:
    * @brief set interrupt pin
    * @oaram irqPin interrupt pin name
    */
-  void setIrqPin(const PinName irqPin) { irqPin_ = irqPin; }
+  void setIrqPin(const PinName& irqPin) { irqPin_ = irqPin; }
 
   /**
    * @brief enable interrupt generation
@@ -169,7 +169,7 @@ public:
 protected:
 private:
   TwoWire&      wire_;
-  const uint8_t address_;
+  const uint8_t address_ {0};
   PinName       irqPin_ {NC};
   Rate          rate_ {Rate::RATE_ONE_SHOT};
   LowPassFilter lpf_ {LowPassFilter::LPF_2};
