@@ -20,7 +20,6 @@ terminate  KEYWORD2
 setRate   KEYWORD2
 reset   KEYWORD2
 connected  KEYWORD2
-setIrqPin KEYWORD2
 enableInterrupt    KEYWORD2
 disableInterrupt   KEYWORD2
 interruptCallback KEYWORD2
